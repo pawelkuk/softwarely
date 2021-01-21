@@ -59,17 +59,19 @@ const NestedList = ({ json, nestLevel = 0 }) => {
     const containsNestedList = typeof el === "object";
     if (containsNestedList)
       return (
-        <div>
-          <input
-            type={el.type}
-            id={`${el.type}-list-${idx}`}
-            name={`${el.type}-list-${nestLevel}`}
-          />
-          <label for={`radio-list-${idx}`}>{el.title}</label>
+        <details>
+          <summary>
+            <input
+              type={el.type}
+              id={`${el.type}-list-${idx}`}
+              name={`${el.type}-list-${nestLevel}`}
+            />
+            {el.title}
+          </summary>
           <ul>
             <NestedList json={el.data} nestLevel={nestLevel} />
           </ul>
-        </div>
+        </details>
       );
     else return <li>{el}</li>;
   });

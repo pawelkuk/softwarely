@@ -6,3 +6,17 @@ ul {
   list-style-type: none;
   margin: 0;
 }
+
+details {
+  font: 16px "Open Sans", Calibri, sans-serif;
+  width: 620px;
+}
+
+details > summary {
+  list-style: none;
+}
+
+/* details > summary::-webkit-details-marker {
+  display: none;
+}
+   */
