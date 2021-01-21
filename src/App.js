@@ -1,23 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+let json = [
+  {
+    type: "radio",
+    data: ["1data1", "1data2"],
+  },
+  {
+    type: "checkbox",
+    data: [
+      {
+        type: "radio",
+        data: [
+          "2data1",
+          "2data2",
+          {
+            type: "radio",
+            data: ["4data1", "4data2"],
+          },
+          {
+            type: "radio",
+            data: ["5data1", "5data2", "5data3"],
+          },
+        ],
+      },
+      {
+        type: "radio",
+        data: ["3data1", "3data2", "3data3"],
+      },
+    ],
+  },
+  "some string",
+];
+
+const NestedList = ({ json }) => {
+  return json.map((el) => {
+    const containsNestedList = typeof el === "object";
+    if (containsNestedList) return <NestedList json={el.data} />;
+    else return <div>{el}</div>;
+  });
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NestedList json={json} />
     </div>
   );
 }
