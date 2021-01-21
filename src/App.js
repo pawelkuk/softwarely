@@ -53,7 +53,8 @@ let json = [
   "some string",
 ];
 
-const NestedList = ({ json, type, isEven, nestLevel = 0 }) => {
+const NestedList = ({ json, nestLevel = 0 }) => {
+  nestLevel++;
   return json.map((el, idx) => {
     const containsNestedList = typeof el === "object";
     if (containsNestedList)
@@ -65,15 +66,12 @@ const NestedList = ({ json, type, isEven, nestLevel = 0 }) => {
             name={`${el.type}-list-${nestLevel}`}
           />
           <label for={`radio-list-${idx}`}>{el.title}</label>
-          <NestedList
-            json={el.data}
-            type={el.type}
-            isEven={idx % 2 === 0}
-            nestLevel={nestLevel++}
-          />
+          <ul>
+            <NestedList json={el.data} nestLevel={nestLevel} />
+          </ul>
         </div>
       );
-    else return <div>{el}</div>;
+    else return <li>{el}</li>;
   });
 };
 
