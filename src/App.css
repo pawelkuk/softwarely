@@ -16,7 +16,9 @@ details > summary {
   list-style: none;
 }
 
-/* details > summary::-webkit-details-marker {
-  display: none;
+summary {
+  pointer-events: none;
 }
-   */
+.clickable {
+  pointer-events: auto;
+}
