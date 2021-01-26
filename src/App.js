@@ -92,7 +92,9 @@ const NestedList = ({ json, nestLevel = 0 }) => {
             />
             {el.title}
           </summary>
-          <ul>
+          <ul className="list-wrapper">
+            <div className="line"></div>
+
             <NestedList json={el.data} nestLevel={nestLevel} />
           </ul>
         </details>
@@ -102,11 +104,7 @@ const NestedList = ({ json, nestLevel = 0 }) => {
 };
 
 function App() {
-  return (
-    <div>
-      <NestedList json={json} />
-    </div>
-  );
+  return <NestedList json={json} />;
 }
 
 export default App;

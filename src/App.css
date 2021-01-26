@@ -4,12 +4,8 @@ li:nth-child(odd) {
 
 ul {
   list-style-type: none;
-  margin: 0;
-}
-
-details {
-  font: 16px "Open Sans", Calibri, sans-serif;
-  width: 620px;
+  margin: 0px;
+  padding-left: 10px;
 }
 
 details > summary {
@@ -21,4 +17,21 @@ summary {
 }
 .clickable {
   pointer-events: auto;
+}
+
+.list-wrapper {
+  position: relative;
+}
+
+.line {
+  background: #979696;
+  width: 1.5px;
+  height: 100%;
+  position: absolute;
+  left: 10px;
+}
+
+li:before {
+  content: "-";
+  color: #979696;
 }
