@@ -80,7 +80,7 @@ const NestedList = ({ json, nestLevel = 0 }) => {
     const containsNestedList = typeof el === "object";
     if (containsNestedList)
       return (
-        <details open={ifChecked[idx][1]}>
+        <details className="details7" open={ifChecked[idx][1]}>
           <summary>
             <input
               className="clickable"
@@ -92,9 +92,8 @@ const NestedList = ({ json, nestLevel = 0 }) => {
             />
             {el.title}
           </summary>
-          <ul className="list-wrapper">
+          <ul className="list-wrapper content">
             <div className="line"></div>
-
             <NestedList json={el.data} nestLevel={nestLevel} />
           </ul>
         </details>
