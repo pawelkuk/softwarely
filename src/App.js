@@ -1,5 +1,8 @@
 import "./App.css";
 import { useState } from "react";
+// the input data should be an Array of either a string or an object
+// with properties: type->"radio" or "checkbox", title -> string and
+// data -> Array with the aforementioned values (and so on)
 let json = [
   {
     type: "radio",
@@ -64,26 +67,44 @@ let json = [
   },
 ];
 
-const NestedList = ({ json, nestLevel = 0 }) => {
-  const handleClick = (e, type, idx) => {
+const NestedList = ({ data, nestLevel = 0 }) => {
+  const handleClick = (clickedType, idxOfClicked) => {
     setIfChecked(
-      ifChecked.map(([t, val], index) => {
-        if (type === "checkbox") {
-          if (idx === index) return [t, !val];
-          else return [t, val];
-        } else if (type === "radio" && t === "radio") {
-          if (idx === index) return [t, true];
-          else return [t, false];
-        } else if (type === "radio" && t === "checkbox") return [t, val];
-        else return ["error", "error"];
+      ifChecked.map(([currType, currVal], currIdx) => {
+        if (clickedType === "checkbox" && idxOfClicked === currIdx)
+          // flip only the value of the clicked checkbox
+          return [currType, !currVal];
+        if (clickedType === "checkbox" && idxOfClicked !== currIdx)
+          // leave as is
+          return [currType, currVal];
+        if (
+          clickedType === "radio" &&
+          currType === "radio" &&
+          idxOfClicked === currIdx
+        )
+          // check the radio button if it was the clicked radio button
+          return [currType, true];
+        if (
+          clickedType === "radio" &&
+          currType === "radio" &&
+          idxOfClicked !== currIdx
+        )
+          // uncheck the radio button if it was NOT the clicked radio button
+          return [currType, false];
+        if (clickedType === "radio" && currType === "checkbox")
+          // checkboxes are not affected by clicking radio buttons
+          return [currType, currVal];
+        else return ["error", "error"]; // inconsistent state
       })
     );
   };
-  let [ifChecked, setIfChecked] = useState(json.map((el) => [el.type, false]));
+  let [ifChecked, setIfChecked] = useState(
+    data.map((el) => (nestLevel === 0 ? [el.type, true] : [el.type, false]))
+  );
   nestLevel++;
-  return json.map((el, idx) => {
-    const containsNestedList = typeof el === "object";
-    if (containsNestedList)
+  return data.map((el, idx) => {
+    const containsOfNestedList = typeof el === "object";
+    if (containsOfNestedList)
       return (
         <details open={ifChecked[idx][1]}>
           <summary>
@@ -93,13 +114,13 @@ const NestedList = ({ json, nestLevel = 0 }) => {
               id={`${el.type}-list-${idx}`}
               name={`${el.type}-list-${nestLevel}`}
               checked={ifChecked[idx][1]}
-              onChange={(e) => handleClick(e, el.type, idx)}
+              onChange={() => handleClick(el.type, idx)}
             />
             {el.title}
           </summary>
           <ul className="list-wrapper content">
             <div className="line"></div>
-            <NestedList json={el.data} nestLevel={nestLevel} />
+            <NestedList data={el.data} nestLevel={nestLevel} />
           </ul>
         </details>
       );
@@ -108,7 +129,7 @@ const NestedList = ({ json, nestLevel = 0 }) => {
 };
 
 function App() {
-  return <NestedList json={json} />;
+  return <NestedList data={json} />;
 }
 
 export default App;
