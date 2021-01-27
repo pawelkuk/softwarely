@@ -3,60 +3,65 @@ import { useState } from "react";
 let json = [
   {
     type: "radio",
-    title: "some title",
-    data: ["1data1", "1data2"],
-  },
-  {
-    type: "radio",
-    title: "some title x",
-    data: ["1data1x", "1data2x"],
-  },
-  {
-    type: "checkbox",
-    title: "some title xd",
+    title: "Title",
     data: [
       {
         type: "radio",
-        title: "some title xdd",
-        data: [
-          "2data1",
-          "2data2",
-          {
-            type: "radio",
-            title: "some title awdaw",
-            data: ["4data1", "4data2"],
-          },
-          {
-            type: "radio",
-            title: "some title mhm",
-            data: [
-              {
-                type: "checkbox",
-                title: "some title awdaw",
-                data: ["4data1", "4data2"],
-              },
-              {
-                type: "checkbox",
-                title: "some title awdaw",
-                data: ["4data1", "4data2"],
-              },
-              {
-                type: "checkbox",
-                title: "some title awdaw",
-                data: ["4data1", "4data2"],
-              },
-            ],
-          },
-        ],
+        title: "Title 1 Nest Level 0",
+        data: ["leaf 1", "leaf 2"],
       },
       {
         type: "radio",
-        title: "some title",
-        data: ["3data1", "3data2", "3data3"],
+        title: "Title 2 Nest Level 0",
+        data: ["leaf 1", "leaf 2"],
+      },
+      {
+        type: "checkbox",
+        title: "Title 3 Nest Level 0",
+        data: [
+          {
+            type: "radio",
+            title: "Title 1 Nest Level 1",
+            data: [
+              "leaf 1",
+              "leaf 2",
+              {
+                type: "radio",
+                title: "Title 1 Nest Level 2",
+                data: ["leaf 1", "leaf 2"],
+              },
+              {
+                type: "radio",
+                title: "Title 2 Nest Level 2",
+                data: [
+                  {
+                    type: "checkbox",
+                    title: "Title 1 Nest Level 3",
+                    data: ["leaf 1", "leaf 2"],
+                  },
+                  {
+                    type: "checkbox",
+                    title: "Title 2 Nest Level 3",
+                    data: ["leaf 1", "leaf 2"],
+                  },
+                  {
+                    type: "checkbox",
+                    title: "Title 3 Nest Level 3",
+                    data: ["leaf 1", "leaf 2"],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            type: "radio",
+            title: "Title 2 Nest Level 1",
+            data: ["3data1", "3data2", "3data3"],
+          },
+        ],
       },
     ],
   },
-  "some string",
 ];
 
 const NestedList = ({ json, nestLevel = 0 }) => {
@@ -80,10 +85,10 @@ const NestedList = ({ json, nestLevel = 0 }) => {
     const containsNestedList = typeof el === "object";
     if (containsNestedList)
       return (
-        <details className="details7" open={ifChecked[idx][1]}>
+        <details open={ifChecked[idx][1]}>
           <summary>
             <input
-              className="clickable"
+              className={`clickable regular-${el.type}`}
               type={el.type}
               id={`${el.type}-list-${idx}`}
               name={`${el.type}-list-${nestLevel}`}
