@@ -61,6 +61,7 @@ let json = [
             title: "Title 2 Nest Level 1",
             data: ["3data1", "3data2", "3data3"],
           },
+          "Some title",
         ],
       },
     ],
